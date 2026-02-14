@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FishNet.Object;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController : NetworkBehaviour
 {
     //settings
     [SerializeField] private float moveSpeed = 5;
@@ -13,6 +14,13 @@ public class PlayerMovementController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lookInput;
 
+
+    public override void OnStartClient()
+    {
+        if (IsOwner)
+            GetComponent<PlayerInput>().enabled = true;
+    }
+
     private void Start()
     {
         Cursor.visible = false;
@@ -23,6 +31,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if (!IsOwner)
+            return;
+
         RotatePlayer();
         MovePlayer();
     }
