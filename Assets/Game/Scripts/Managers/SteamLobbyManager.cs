@@ -8,10 +8,9 @@ using FishyFacepunch;
 public class SteamLobbyManager : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
-    [SerializeField] private Transform uiCamPos;
-    [SerializeField] private Camera camPrefab;
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private bool friendsOnly = true;
+    [SerializeField] private GameObject inviteButton;
 
     private Lobby? _currentLobby;
 
@@ -52,6 +51,8 @@ public class SteamLobbyManager : MonoBehaviour
         networkManager.ClientManager.StartConnection();
 
         Debug.Log($"Lobby created: {lobby.Id} host = {SteamClient.SteamId}");
+
+        inviteButton.SetActive(true);
     }
 
     public void OpenInviteOverlay()
@@ -103,5 +104,13 @@ public class SteamLobbyManager : MonoBehaviour
         transport.SetClientAddress(hostSteamId.ToString());
 
         networkManager.ClientManager.StartConnection();
+    }
+
+
+    public static void SetLobbyGrouping(Lobby lobby)
+    {
+        SteamFriends.SetRichPresence("steam_player_group", lobby.Id.ToString());
+
+        SteamFriends.SetRichPresence("steam_player_group_size", lobby.MemberCount.ToString());
     }
 }
