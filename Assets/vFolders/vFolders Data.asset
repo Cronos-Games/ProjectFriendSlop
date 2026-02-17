@@ -100,6 +100,8 @@ MonoBehaviour:
     - 73b29a5af2f04864699941fc23d5e110
     - 20e6b1dc6b2c2aa41a7bab869daa1ce5
     - b8aa3d7aa8ea4b04b8c6bf02a715a645
+    - b5b4f3aeafdd7d04b8874de82feb942f
+    - 89012b940cb529e4cad1a08567d67c97
     values:
     - guid: 00000000000000001000000000000000
       iColor: 0
@@ -529,5 +531,15 @@ MonoBehaviour:
     - guid: b8aa3d7aa8ea4b04b8c6bf02a715a645
       iColor: 0
       autoIcon: cs Script Icon
+      customIcon: 
+      autoIconDirty: 0
+    - guid: b5b4f3aeafdd7d04b8874de82feb942f
+      iColor: 1
+      autoIcon: SceneAsset Icon
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 89012b940cb529e4cad1a08567d67c97
+      iColor: 0
+      autoIcon: Prefab Icon
       customIcon: 
       autoIconDirty: 0

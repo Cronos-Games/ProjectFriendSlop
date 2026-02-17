@@ -6,63 +6,124 @@ public class PlayerMovementController : NetworkBehaviour
 {
     //settings
     [SerializeField] private float moveSpeed = 5;
-    [SerializeField] private float sensitivity = 5;
+    [SerializeField] private float sensitivity = 0.05f;
 
     //references
     private Rigidbody rb;
 
+    //client side input
     private Vector2 moveInput;
-    private Vector2 lookInput;
+    private Vector2 lookAccum;
+
+    //server side latest input
+    private Vector2 serverMoveInput;
+    private Vector2 serverLookDelta;
 
 
     public override void OnStartClient()
     {
+
+        if (TryGetComponent<PlayerInput>(out PlayerInput pi))
+        {
+            pi.enabled = IsOwner;
+        } else
+        {
+            Debug.LogError("Player object does not have PlayerInput module.");
+        }
+
         if (IsOwner)
-            GetComponent<PlayerInput>().enabled = true;
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
-    private void Start()
+    public override void OnStartNetwork()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        base.OnStartNetwork();
 
-        rb = GetComponent<Rigidbody>();
+        if (TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            this.rb = rb;
+        } else
+        {
+            Debug.LogError("Player object does not have a Rigidbody.");
+        }
+
+        if (!IsServer)
+        {
+            rb.isKinematic = true;
+        } else
+        {
+            rb.isKinematic = false;
+        }
     }
+
 
     private void FixedUpdate()
     {
+        if (IsOwner)
+        {
+            Vector2 lookDeltaThisTick = lookAccum;
+            lookAccum = Vector2.zero;
 
-        if (!IsOwner)
+            if (IsServer) //host player
+            {
+                serverMoveInput = moveInput;
+                serverLookDelta = lookDeltaThisTick;
+            } else
+            {
+                SendInputServerRpc(moveInput, lookDeltaThisTick);
+            }
+
+        }
+
+        if (!IsServer)
             return;
 
-        RotatePlayer();
-        MovePlayer();
+        RotatePlayer_Server();
+        MovePlayer_Server();
     }
 
     //get look input from action map
     public void GetLookInput(InputAction.CallbackContext context)
     {
-        lookInput = context.ReadValue<Vector2>();
+        if (!IsOwner)
+            return;
+
+        lookAccum += context.ReadValue<Vector2>();
     }
 
 
     //get move input from action map
     public void GetMoveInput(InputAction.CallbackContext context)
     {
+        if(!IsOwner) 
+            return;
+
         moveInput = context.ReadValue<Vector2>();
     }
 
 
-    private void RotatePlayer()
+    [ServerRpc]
+    private void SendInputServerRpc(Vector2 move, Vector2 lookDelta)
     {
-        float rotDir = lookInput.x * sensitivity;
-
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, rotDir, 0f));
+        serverMoveInput = move;
+        serverLookDelta = lookDelta;
     }
 
-    private void MovePlayer()
+
+    private void RotatePlayer_Server()
     {
-        Vector3 direction = transform.forward * moveInput.y + transform.right * moveInput.x;
+        float rotDir = serverLookDelta.x * sensitivity;
+
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, rotDir, 0f));
+        serverLookDelta = Vector2.zero;
+    }
+
+    private void MovePlayer_Server()
+    {
+        Vector3 direction = transform.forward * serverMoveInput.y + transform.right * serverMoveInput.x;
         if(direction.sqrMagnitude > 1 ) //normalize vector
             direction.Normalize();
 
