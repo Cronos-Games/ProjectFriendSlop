@@ -104,6 +104,8 @@ public class SteamLobbyManager : MonoBehaviour
         transport.SetClientAddress(hostSteamId.ToString());
 
         networkManager.ClientManager.StartConnection();
+
+        SetLobbyGrouping(lobby);
     }
 
 
