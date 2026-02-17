@@ -53,6 +53,9 @@ public class SteamLobbyManager : MonoBehaviour
         Debug.Log($"Lobby created: {lobby.Id} host = {SteamClient.SteamId}");
 
         inviteButton.SetActive(true);
+
+
+        SetLobbyGrouping(lobby);
     }
 
     public void OpenInviteOverlay()
