@@ -3,16 +3,21 @@ using Steamworks;
 using Steamworks.Data;
 using System.Threading.Tasks;
 using UnityEngine;
-using FishyFacepunch;
+
 
 public class SteamLobbyManager : MonoBehaviour
 {
+    [Header("Lobby")]
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private bool friendsOnly = true;
     [SerializeField] private GameObject inviteButton;
+    [SerializeField] private GameObject uiCam;
 
     private Lobby? _currentLobby;
+
+
+
 
     private void OnEnable()
     {
@@ -56,6 +61,7 @@ public class SteamLobbyManager : MonoBehaviour
 
 
         SetLobbyGrouping(lobby);
+        uiCam.SetActive(false);
     }
 
     public void OpenInviteOverlay()
@@ -77,6 +83,8 @@ public class SteamLobbyManager : MonoBehaviour
     {
         var lobby = new Lobby(lobbyId);
         var enter = await lobby.Join();
+
+        _currentLobby = lobby; //store lobby value
 
         if(enter != RoomEnter.Success)
         {
@@ -101,7 +109,7 @@ public class SteamLobbyManager : MonoBehaviour
             hostSteamId = lobby.Owner.Id;
         }
 
-            Debug.Log($"Joined lobby. Connecting to host steamId={hostSteamId}");
+        Debug.Log($"Joined lobby. Connecting to host steamId={hostSteamId}");
 
         var transport = networkManager.GetComponent<FishyFacepunch.FishyFacepunch>();
         transport.SetClientAddress(hostSteamId.ToString());
@@ -109,6 +117,7 @@ public class SteamLobbyManager : MonoBehaviour
         networkManager.ClientManager.StartConnection();
 
         SetLobbyGrouping(lobby);
+        uiCam.SetActive(false);
     }
 
 
@@ -118,4 +127,13 @@ public class SteamLobbyManager : MonoBehaviour
 
         SteamFriends.SetRichPresence("steam_player_group_size", lobby.MemberCount.ToString());
     }
+
+
+    public Lobby? GetLobby()
+    {
+        return _currentLobby;
+    }
+
+
+
 }

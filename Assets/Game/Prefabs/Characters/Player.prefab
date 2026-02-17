@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 8137561851263311375}
   - component: {fileID: 8540268367687781316}
   - component: {fileID: 8025734725468446671}
+  - component: {fileID: 3305800208939256601}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -171,7 +172,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8137561851263311375}
   _networkObjectCache: {fileID: 8137561851263311375}
   moveSpeed: 5
-  sensitivity: 1
+  sensitivity: 0.05
 --- !u!114 &2976233851838341273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +234,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0041cf4c-181e-46f2-9fb9-c10a94802884
     m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3305800208939256601}
+        m_TargetAssemblyTypeName: PlayerOverlayInputController, Assembly-CSharp
+        m_MethodName: OnScoreboard
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 17c89d40-84a0-4426-bc10-1e7ed7e8dded
+    m_ActionName: 'Player/OpenScoreboard[/Keyboard/tab]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -401,6 +418,21 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &3305800208939256601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184893996799688474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f6fbbb07aabbf4a86f8a1c8aca0008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerOverlayInputController
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8137561851263311375}
+  _networkObjectCache: {fileID: 0}
 --- !u!1 &2449504525643999528
 GameObject:
   m_ObjectHideFlags: 0
