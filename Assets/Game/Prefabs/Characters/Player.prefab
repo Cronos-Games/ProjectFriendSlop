@@ -520,9 +520,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -530,8 +530,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.018449783
+      value: 0.9945679
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -539,19 +539,46 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.07627317
-      value: 0.41975516
-      inSlope: -1.8532149
-      outSlope: -1.8532149
+      time: 0.03711114
+      value: 0.5002834
+      inSlope: -7.8730335
+      outSlope: -7.8730335
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.75810385
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.40946925
-      value: 0.042949528
-      inSlope: -0.53142476
-      outSlope: -0.53142476
+      time: 0.07811949
+      value: 0.25135916
+      inSlope: -2.1073415
+      outSlope: -2.1073415
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.1643556
+      value: 0.12529416
+      inSlope: -0.92565525
+      outSlope: -0.92565525
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.32644618
+      value: 0.05109772
+      inSlope: -0.23661417
+      outSlope: -0.23661417
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5797613
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6622925
+      value: 0.013625922
+      inSlope: -0.05367475
+      outSlope: -0.05367475
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -767,11 +794,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7218817176228629694, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: optionalFirstInputFilter
+      value: 
+      objectReference: {fileID: 7360177037814078282}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1585584454554419895, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 7360177037814078282}
   m_SourcePrefab: {fileID: 100100000, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+--- !u!114 &3061712572168297704 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 447300609514575683, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+  m_PrefabInstance: {fileID: 3190873814521007019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199996416821020956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a9958e1fac70e42b5e45207ebcbc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaVoiceChat.MetaVc
+--- !u!1 &4199996416821020956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1585584454554419895, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+  m_PrefabInstance: {fileID: 3190873814521007019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7360177037814078282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199996416821020956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176f87b31a5c31b46adcf9fe6c17be09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::MetaVoiceChat.Rnnoise.RnnoiseVcInputFilter
+  optionalNextInputFilter: {fileID: 0}
+  metaVc: {fileID: 3061712572168297704}
 --- !u!4 &8279087023632979415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}

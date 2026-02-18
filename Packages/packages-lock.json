@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.adrenak.rnnoise4unity": {
+      "version": "https://github.com/adrenak/RNNoise4Unity.git?path=/Assets/Adrenak.RNNoise4Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "7c068a22ae1c526d484b10af5266701f43d9124c"
+    },
     "com.mibdev.fullscreen-editor": {
       "version": "file:com.mibdev.fullscreen-editor",
       "depth": 0,

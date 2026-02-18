@@ -1,7 +1,8 @@
+using Adrenak.RNNoise4Unity;
 using Steamworks;
+using Steamworks.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Steamworks.Data;
 using UnityEngine;
 
 public class LobbyOverlayController : MonoBehaviour
@@ -26,6 +27,14 @@ public class LobbyOverlayController : MonoBehaviour
         }
     }
 
+
+    private Denoiser denoiser;
+
+    void Start()
+    {
+        denoiser = new Denoiser();
+        Debug.Log("RNNoise initialized successfully.");
+    }
     public void Show()
     {
         panel.SetActive(true);
