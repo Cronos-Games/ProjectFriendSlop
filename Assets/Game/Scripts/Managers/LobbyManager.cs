@@ -140,6 +140,7 @@ public class LobbyManager : MonoBehaviour
     public void JoinLocal()
     {
         transportManager.StartClient(ConnectionMode.Local);
+        uiCam.SetActive(false);
     }
 
 }

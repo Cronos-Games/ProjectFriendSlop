@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 3460577977578531820}
   - {fileID: 7603292463620796735}
+  - {fileID: 8279087023632979415}
   m_Father: {fileID: 6627791967221593868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7656000895509437516
@@ -133,7 +134,6 @@ GameObject:
   - component: {fileID: 8540268367687781316}
   - component: {fileID: 8025734725468446671}
   - component: {fileID: 3305800208939256601}
-  - component: {fileID: 7593023541928179411}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -435,22 +435,6 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 8137561851263311375}
   _networkObjectCache: {fileID: 0}
---- !u!114 &7593023541928179411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2184893996799688474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d7c2cb6370bad449d78d03ecfaeb9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerVoiceChatController
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 8137561851263311375}
-  _networkObjectCache: {fileID: 0}
-  voiceChatOutput: {fileID: 3947691460387981874}
 --- !u!1 &2449504525643999528
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +510,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -536,7 +520,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 50
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -719,3 +703,77 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &3190873814521007019
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3938132961124290157}
+    m_Modifications:
+    - target: {fileID: 1088426840941113769, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: WasActiveDuringEdit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585584454554419895, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_Name
+      value: VoiceChatManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585584454554419895, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310000969301039721, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 3947691460387981874}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+--- !u!4 &8279087023632979415 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6822244373303811708, guid: 5acfd480086153b4983e4a149fa75b21, type: 3}
+  m_PrefabInstance: {fileID: 3190873814521007019}
+  m_PrefabAsset: {fileID: 0}

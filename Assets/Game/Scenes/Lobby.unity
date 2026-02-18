@@ -159,11 +159,11 @@ Transform:
   m_GameObject: {fileID: 162031915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.38969, y: 0.5, z: -217.26076}
+  m_LocalPosition: {x: 7.6800003, y: 0.5, z: -10.979401}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 358791343}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &162031918
 MonoBehaviour:
@@ -183,178 +183,6 @@ MonoBehaviour:
   friendsOnly: 1
   inviteButton: {fileID: 632655915}
   uiCam: {fileID: 591353152}
---- !u!1 &186080920
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 186080921}
-  - component: {fileID: 186080925}
-  - component: {fileID: 186080924}
-  - component: {fileID: 186080923}
-  - component: {fileID: 186080922}
-  - component: {fileID: 186080926}
-  m_Layer: 0
-  m_Name: VoiceChatManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &186080921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 358791343}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &186080922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1117dd79caed3949abdf12674fe3b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MetaVoiceChat.NetProviders.FishNet.FishNetNetProvider
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 186080926}
-  _networkObjectCache: {fileID: 0}
---- !u!114 &186080923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b5c71e1860482b4a84309c4d7a199e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MetaVoiceChat.Output.AudioSource.VcAudioSourceOutput
-  metaVc: {fileID: 186080925}
-  optionalFirstOutputFilter: {fileID: 0}
-  audioSource: {fileID: 0}
-  frameLifetime: 0.5
-  maxNegativeLatency: 0.25
-  pitchProportionalGain: 1
-  pitchMaxCorrection: 0.2
---- !u!114 &186080924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566ca729670e5ae419457b7ce863e32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MetaVoiceChat.Input.Mic.VcMicAudioInput
-  metaVc: {fileID: 186080925}
-  optionalFirstInputFilter: {fileID: 0}
---- !u!114 &186080925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a9958e1fac70e42b5e45207ebcbc69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MetaVoiceChat.MetaVc
-  audioInput: {fileID: 186080924}
-  audioOutput: {fileID: 0}
-  config:
-    application: 2048
-    complexity: 10
-    framesize: 5004
-    signal: 3001
-    jitterTimeWindow: 0.24
-    jitterMeanOffsetWindow: 100
-    outputMinBufferSize: 2
-  isEchoEnabled: 0
-  isSineOverrideEnabled: 0
-  maxCodecMilliseconds: 50
-  allowMultipleCodecWarningsPerFrame: 0
-  isDeafened:
-    value: 0
-  isInputMuted:
-    value: 0
-  isOutputMuted:
-    value: 0
-  isSpeaking:
-    value: 0
---- !u!114 &186080926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186080920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FishNet.Runtime::FishNet.Object.NetworkObject
-  <IsNested>k__BackingField: 0
-  WasActiveDuringEdit: 0
-  WasActiveDuringEdit_Set1: 1
-  <ComponentIndex>k__BackingField: 0
-  <PredictedSpawn>k__BackingField: {fileID: 0}
-  <PredictedOwner>k__BackingField: {fileID: 0}
-  NetworkBehaviours: []
-  InitializedParentNetworkBehaviour: {fileID: 0}
-  InitializedNestedNetworkObjects: []
-  RuntimeParentNetworkBehaviour: {fileID: 0}
-  RuntimeChildNetworkBehaviours: []
-  _isNetworked: 1
-  _isSpawnable: 1
-  _isGlobal: 0
-  _initializeOrder: 0
-  _preventDespawnOnDisconnect: 0
-  _defaultDespawnType: 0
-  _initializedTimestamp: 0
-  NetworkObserver: {fileID: 0}
-  _enablePrediction: 0
-  _predictionType: 0
-  _localReconcileCorrectionType: 2
-  _graphicalObject: {fileID: 0}
-  _detachGraphicalObject: 0
-  _enableStateForwarding: 1
-  _networkTransform: {fileID: 0}
-  _ownerInterpolation: 1
-  _ownerSmoothedProperties: 255
-  _adaptiveInterpolation: 3
-  _spectatorSmoothedProperties: 255
-  _spectatorInterpolation: 2
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  <PrefabId>k__BackingField: 65535
-  <SpawnableCollectionId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 0
-  SceneId: 4059559417
-  SerializedTransformProperties:
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0, w: 0}
-    Scale: {x: 0, y: 0, z: 0}
-    IsValid: 0
 --- !u!1 &358791342
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,10 +211,7 @@ Transform:
   m_LocalPosition: {x: -9.70969, y: -0, z: 206.28136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 162031917}
-  - {fileID: 1061152934}
-  - {fileID: 186080921}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
@@ -856,7 +681,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591353152}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &591353155
 Camera:
   m_ObjectHideFlags: 0
@@ -1163,7 +988,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 9.70969, y: 0, z: -206.28136}
-  m_LocalScale: {x: 50, y: 1, z: 50}
+  m_LocalScale: {x: 200, y: 1, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1099172246}
@@ -1228,7 +1053,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 358791343}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4393252310584637056, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: _autoStartType
@@ -1240,7 +1065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.45266
+      value: 7.7429695
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1248,7 +1073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -216.94559
+      value: -10.66423
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1334,11 +1159,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2118099418}
   m_SourcePrefab: {fileID: 100100000, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
---- !u!4 &1061152934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
-  m_PrefabInstance: {fileID: 1061152933}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1099172245
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,3 +2196,5 @@ SceneRoots:
   - {fileID: 1354468931}
   - {fileID: 1625637838}
   - {fileID: 591353156}
+  - {fileID: 1061152933}
+  - {fileID: 162031917}
