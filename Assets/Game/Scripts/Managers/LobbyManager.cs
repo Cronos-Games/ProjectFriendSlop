@@ -1,22 +1,24 @@
 using FishNet.Managing;
+using FishNet.Transporting.Multipass;
+using FishNet.Transporting.Tugboat;
+using FishyFacepunch;
 using Steamworks;
 using Steamworks.Data;
 using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class SteamLobbyManager : MonoBehaviour
+public class LobbyManager : MonoBehaviour
 {
     [Header("Lobby")]
     [SerializeField] private NetworkManager networkManager;
+    [SerializeField] private TransportManager transportManager;
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private bool friendsOnly = true;
     [SerializeField] private GameObject inviteButton;
     [SerializeField] private GameObject uiCam;
 
     private Lobby? _currentLobby;
-
-
 
 
     private void OnEnable()
@@ -52,8 +54,7 @@ public class SteamLobbyManager : MonoBehaviour
         lobby.SetJoinable(true);
         lobby.SetData("HostSteamId", SteamClient.SteamId.ToString());
 
-        networkManager.ServerManager.StartConnection();
-        networkManager.ClientManager.StartConnection();
+        transportManager.StartHost(ConnectionMode.Steam);
 
         Debug.Log($"Lobby created: {lobby.Id} host = {SteamClient.SteamId}");
 
@@ -114,7 +115,7 @@ public class SteamLobbyManager : MonoBehaviour
         var transport = networkManager.GetComponent<FishyFacepunch.FishyFacepunch>();
         transport.SetClientAddress(hostSteamId.ToString());
 
-        networkManager.ClientManager.StartConnection();
+        transportManager.StartClient(ConnectionMode.Steam);
 
         SetLobbyGrouping(lobby);
         uiCam.SetActive(false);
@@ -135,5 +136,10 @@ public class SteamLobbyManager : MonoBehaviour
     }
 
 
+
+    public void JoinLocal()
+    {
+        transportManager.StartClient(ConnectionMode.Local);
+    }
 
 }

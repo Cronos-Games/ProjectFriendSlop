@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LobbyOverlayController : MonoBehaviour
 {
-    SteamLobbyManager lobbyManager;
+    LobbyManager lobbyManager;
 
     [Header("Player List")]
     [SerializeField] private GameObject panel;
@@ -20,9 +20,9 @@ public class LobbyOverlayController : MonoBehaviour
 
     private void Awake()
     {
-        if (!TryGetComponent<SteamLobbyManager>(out lobbyManager))
+        if (!TryGetComponent<LobbyManager>(out lobbyManager))
         {
-            Debug.LogError("LobbyOverlayController could not find SteamLobbyManager");
+            Debug.LogError("LobbyOverlayController could not find LobbyManager");
         }
     }
 
