@@ -185,6 +185,10 @@ MonoBehaviour:
   rootMotionMultiplier: 1
   walkSpeedValue: 0.5
   sprintSpeedValue: 1
+  serverSnapshotRateHz: 35
+  hardSnapPositionError: 1
+  hardSnapRotationErrorDeg: 25
+  softCorrection: 0.05
 --- !u!114 &2976233851838341273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: FishNet.Runtime::FishNet.Object.NetworkObject
   <IsNested>k__BackingField: 0
-  WasActiveDuringEdit: 1
+  WasActiveDuringEdit: 0
   WasActiveDuringEdit_Set1: 1
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
@@ -426,7 +430,7 @@ MonoBehaviour:
   _extrapolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  _clientAuthoritative: 0
+  _clientAuthoritative: 1
   _sendToOwner: 1
   _interval: 1
   _synchronizePosition: 1
@@ -503,8 +507,8 @@ MonoBehaviour:
   _synchronizeWhenDisabled: 0
   _smoothFloats: 1
   _interpolation: 2
-  _clientAuthoritative: 0
-  _sendToOwner: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &2449504525643999528
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,13 +533,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2449504525643999528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27677658, y: -0, z: -0, w: 0.96093434}
-  m_LocalPosition: {x: 0, y: 2.8800004, z: -3}
+  m_LocalRotation: {x: 0.083007075, y: -0, z: -0, w: 0.99654895}
+  m_LocalPosition: {x: 0, y: 2.247, z: -1.947}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6627791967221593868}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 9.523, y: 0, z: 0}
 --- !u!1 &3399307063979322734
 GameObject:
   m_ObjectHideFlags: 0

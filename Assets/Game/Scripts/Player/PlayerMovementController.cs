@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FishNet.Object;
+using System.Runtime.CompilerServices;
+using FishNet.Connection;
+using FishNet.Component.Prediction;
 
 public class PlayerMovementController : NetworkBehaviour
 {
@@ -19,6 +22,18 @@ public class PlayerMovementController : NetworkBehaviour
     [SerializeField] private float walkSpeedValue = 0.5f;   // what your parent tree expects
     [SerializeField] private float sprintSpeedValue = 1.0f; // what your parent tree expects
 
+    [Header("Server Snapshots (Owner Reconcile)")]
+    [Tooltip("How often the server sends authoritative state to the owner client.")]
+    [SerializeField] private float serverSnapshotRateHz = 15f;
+
+    [Tooltip("If error exceeds these thresholds, the owner hard-snaps to server state.")]
+    [SerializeField] private float hardSnapPositionError = 1.0f;
+    [SerializeField] private float hardSnapRotationErrorDeg = 25f;
+
+    [Tooltip("Soft correction strength per snapshot (0..1). Higher = faster correction.")]
+    [Range(0.01f, 1f)]
+    [SerializeField] private float softCorrection = 0.12f;
+
 
     //references
     private Rigidbody rb;
@@ -34,6 +49,11 @@ public class PlayerMovementController : NetworkBehaviour
     private Vector2 serverLookDelta;
     private bool serverSprintHeld;
 
+    //client prediction
+    private Vector3 accumulatedRootDelta;
+
+    private float snapshotTimer;
+    private bool simulates => IsServerInitialized || IsOwner;
 
     public override void OnStartClient()
     {
@@ -51,6 +71,8 @@ public class PlayerMovementController : NetworkBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+
+
     }
 
     public override void OnStartNetwork()
@@ -65,13 +87,7 @@ public class PlayerMovementController : NetworkBehaviour
             Debug.LogError("Player object does not have a Rigidbody.");
         }
 
-        if (!IsServer) //set rigidbody to kinematic for client side, server does all the physics calc
-        {
-            rb.isKinematic = true;
-        } else
-        {
-            rb.isKinematic = false;
-        }
+
 
         if (TryGetComponent<Animator>(out Animator animator))
         {
@@ -81,75 +97,143 @@ public class PlayerMovementController : NetworkBehaviour
         {
             Debug.LogError("Player object does not have an Animator.");
         }
+        
+        if(rb != null)
+            rb.isKinematic = !simulates; //simulate movement for owner and server
 
         animator.updateMode = AnimatorUpdateMode.Fixed; //sest animator to tick with physics
-        animator.applyRootMotion = IsServer; //only apply rootmotion for server
+        animator.applyRootMotion = simulates; //apply rootmotion for client and server
+
+        snapshotTimer = 0f;
     }
 
 
     private void FixedUpdate()
     {
+        if (rb == null || animator == null)
+            return;
+
+
+        Vector2 currentMove = Vector2.zero;
+        Vector2 currentLook = Vector2.zero;
+        bool currentSprint = false;
+
+
+
         if (IsOwner)
         {
-            Vector2 clampedMove = moveInput;
+            //move
+            currentMove = moveInput;
+            if (currentMove.sqrMagnitude > 1f)
+                currentMove.Normalize();
 
-            if (clampedMove.sqrMagnitude > 1f)
-                clampedMove.Normalize();
-
-            Vector2 lookDeltaThisTick = lookAccum;
+            //look
+            currentLook = lookAccum;
             lookAccum = Vector2.zero;
 
-            if (IsServer) //host player
+            //sprint
+            currentSprint = sprintHeld;
+
+            if (IsServerInitialized) //host player
             {
-                serverMoveInput = moveInput;
-                serverLookDelta = lookDeltaThisTick;
-                serverSprintHeld = sprintHeld;
+                serverMoveInput = currentMove;
+                serverLookDelta = currentLook;
+                serverSprintHeld = currentSprint;
             }
             else
             {
-                SendInputServerRpc(moveInput, lookDeltaThisTick, sprintHeld); //send input to server
+                SendInputServerRpc(currentMove, currentLook, currentSprint); //send input to server
             }
         }
 
-        if (!IsServer)
-            return;
+
+        if (simulates)
+        {
+            if (IsServerInitialized)
+                SimulateMovement(Time.fixedDeltaTime, serverMoveInput, serverLookDelta, serverSprintHeld);
+            else
+                SimulateMovement(Time.fixedDeltaTime, currentMove, currentLook, currentSprint);
+
+            ApplyRootMotion();
+        }
+
+
+        if (IsServerInitialized && !IsOwner)
+        {
+            float interval = (serverSnapshotRateHz <= 0f) ? 0.06f : (1f / serverSnapshotRateHz);
+            snapshotTimer += Time.fixedDeltaTime;
+
+            if (snapshotTimer >= interval)
+            {
+                snapshotTimer = 0f;
+
+                SendStateToOwnerRpc(Owner, rb.GetState());
+            }
+        }
+
+        if (IsServerInitialized)
+        {
+            serverLookDelta = Vector2.zero;
+        }
+
+    }
+
+
+
+    private void SimulateMovement(float dt, Vector2 move, Vector2 look, bool sprint)
+    {
+        Vector2 clampedMove = move;
+
+        if (clampedMove.sqrMagnitude > 1f)
+            clampedMove.Normalize();
+
+        Vector2 lookDeltaThisTick = look;
+
 
         //set animator movement floats
-        animator.SetFloat(moveXParam, serverMoveInput.x, animationDamping, Time.fixedDeltaTime);
-        animator.SetFloat(moveYParam, serverMoveInput.y, animationDamping, Time.fixedDeltaTime);
+        animator.SetFloat(moveXParam, clampedMove.x, animationDamping, dt);
+        animator.SetFloat(moveYParam, clampedMove.y, animationDamping, dt);
 
-        float mag = serverMoveInput.magnitude;
+        float mag = clampedMove.magnitude;
         float targetSpeed = mag < 0.01f ? 0f :
-            (serverSprintHeld ? sprintSpeedValue : walkSpeedValue);
+            (sprint ? sprintSpeedValue : walkSpeedValue);
 
-        animator.SetFloat(sprintParam, targetSpeed, animationDamping, Time.fixedDeltaTime);
+        animator.SetFloat(sprintParam, targetSpeed, animationDamping, dt);
 
         if (!string.IsNullOrWhiteSpace(isMovingParam))
-            animator.SetBool(isMovingParam, serverMoveInput.sqrMagnitude > 0.001f);
+            animator.SetBool(isMovingParam, clampedMove.sqrMagnitude > 0.001f);
 
-        RotatePlayer_Server(); //rotate player
+        RotatePlayer(lookDeltaThisTick); //rotate player
+        lookDeltaThisTick = Vector2.zero; //consume delta
     }
 
 
     private void OnAnimatorMove()
     {
-        if (!IsServer || rb == null || animator == null)
+        if (!simulates || rb == null || animator == null)
             return;
 
         Vector3 delta = animator.deltaPosition * rootMotionMultiplier;
-
         delta.y = 0f;
 
-        rb.MovePosition(rb.position + delta);
+        accumulatedRootDelta += delta;
     }
 
-
-    private void RotatePlayer_Server()
+    private void ApplyRootMotion()
     {
-        float rotDir = serverLookDelta.x * sensitivity;
+        if(accumulatedRootDelta.sqrMagnitude > 0f)
+        {
+            rb.MovePosition(rb.position + accumulatedRootDelta);
+            accumulatedRootDelta = Vector3.zero;
+        }
+    }
+
+    private void RotatePlayer(Vector2 lookDelta)
+    {
+        float rotDir = lookDelta.x * sensitivity;
 
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, rotDir, 0f));
-        serverLookDelta = Vector2.zero; //consume delta
+        lookDelta = Vector2.zero; //consume delta
     }
 
     //get look input from action map
@@ -189,18 +273,31 @@ public class PlayerMovementController : NetworkBehaviour
     }
 
 
+    [TargetRpc]
+    private void SendStateToOwnerRpc(NetworkConnection conn, RigidbodyState serverRbState)
+    {
+        if (!IsOwner || rb == null)
+            return;
 
-    //private void MovePlayer_Server()
-    //{
-    //    Vector3 direction = transform.forward * serverMoveInput.y + transform.right * serverMoveInput.x;
-    //    if(direction.sqrMagnitude > 1 ) //normalize vector
-    //        direction.Normalize();
+        float posErr = Vector3.Distance(rb.position, serverRbState.Position);
+        float rotErr = Quaternion.Angle(rb.rotation, serverRbState.Rotation);
 
-    //    Vector3 movement = direction * moveSpeed * Time.fixedDeltaTime; //get actual input location
+       
+        //if difference is too big, hard snap back
+        if (posErr > hardSnapPositionError)
+        {
+            rb.SetState(serverRbState);
+            accumulatedRootDelta = Vector3.zero;
+            return;
+        }
 
-    //    rb.MovePosition(rb.position + movement); //move player
-    //}
+        Vector3 posDelta = (serverRbState.Position - rb.position) * softCorrection;
+        rb.MovePosition(rb.position + posDelta);
 
+        //Quaternion rotDelta = Quaternion.Slerp(rb.rotation, serverRbState.Rotation, softCorrection);
+        //rb.MoveRotation(rotDelta);
 
+        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, serverRbState.Velocity, softCorrection * 0.5f);
+    }
 
 }

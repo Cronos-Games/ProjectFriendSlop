@@ -2147,7 +2147,7 @@ MonoBehaviour:
   _ipv4BindAddress: 
   _enableIpv6: 1
   _ipv6BindAddress: 
-  _port: 7770
+  _port: 7760
   _maximumClients: 4095
   _clientAddress: localhost
 --- !u!114 &2118099417
@@ -2182,7 +2182,7 @@ MonoBehaviour:
   steamTransportIndex: 0
   tugboatTransportIndex: 1
   localAddress: 127.0.0.1
-  localPort: 7770
+  localPort: 7760
   serverBindAddressIPv4: 0.0.0.0
   startServerOnAllTransports: 1
 --- !u!1660057539 &9223372036854775807
