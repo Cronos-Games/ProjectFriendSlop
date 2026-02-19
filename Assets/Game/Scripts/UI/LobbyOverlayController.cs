@@ -35,6 +35,8 @@ public class LobbyOverlayController : MonoBehaviour
         denoiser = new Denoiser();
         Debug.Log("RNNoise initialized successfully.");
     }
+
+
     public void Show()
     {
         panel.SetActive(true);
