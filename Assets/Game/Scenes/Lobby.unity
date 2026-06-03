@@ -1114,10 +1114,14 @@ PrefabInstance:
     - target: {fileID: 7443408887813606060, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: _playerPrefab
       value: 
-      objectReference: {fileID: 8137561851263311375, guid: b9cead3954db7d94ab4cc5ebe65ad02c, type: 3}
+      objectReference: {fileID: 8137561851263311375, guid: c3999677bc1852f47b7c10b0c8076785, type: 3}
     - target: {fileID: 7443408887813606060, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: Spawns.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443408887813606060, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
+      propertyPath: _addToDefaultScene
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606060, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: 'Spawns.Array.data[0]'
