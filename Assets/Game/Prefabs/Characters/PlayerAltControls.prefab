@@ -125,7 +125,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6627791967221593868}
   - component: {fileID: 2976233851838341273}
-  - component: {fileID: 3892762333524557308}
   - component: {fileID: 8137561851263311375}
   - component: {fileID: 8540268367687781316}
   - component: {fileID: 8025734725468446671}
@@ -134,6 +133,7 @@ GameObject:
   - component: {fileID: 4033893727750513773}
   - component: {fileID: 3014223269401028268}
   - component: {fileID: 8330797419629065376}
+  - component: {fileID: 5021732708034940206}
   m_Layer: 0
   m_Name: PlayerAltControls
   m_TagString: Untagged
@@ -271,33 +271,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!54 &3892762333524557308
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2184893996799688474}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &8137561851263311375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +433,8 @@ MonoBehaviour:
   hardSnapPositionError: 1
   hardSnapRotationErrorDeg: 25
   softCorrection: 0.12
+  cameraPivot: {fileID: 3704476917918464973}
+  playerCharacter: {fileID: 0}
 --- !u!114 &4033893727750513773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +500,33 @@ MonoBehaviour:
   _interpolation: 2
   _clientAuthoritative: 1
   _sendToOwner: 0
+--- !u!54 &5021732708034940206
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184893996799688474}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &3399307063979322734
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +833,10 @@ PrefabInstance:
     - target: {fileID: 162860, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
       propertyPath: m_Name
       value: Character_Hero_Knight_Male
+      objectReference: {fileID: 0}
+    - target: {fileID: 162860, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
+      propertyPath: m_TagString
+      value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 487758, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
       propertyPath: m_LocalPosition.x

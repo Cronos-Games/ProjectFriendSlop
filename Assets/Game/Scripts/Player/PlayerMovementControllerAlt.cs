@@ -11,6 +11,8 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
     [Header("Rotation")]
     [SerializeField] private float sensitivity = 0.05f;
 
+
+
     [Header("Animation")]
     [SerializeField] private string moveXParam = "MoveX";
     [SerializeField] private string moveYParam = "MoveY";
@@ -37,9 +39,13 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
 
 
     //references
+    [Header("References")]
     private Rigidbody rb;
     private Animator animator;
-
+    CameraControllerAlt cameraController;
+    [SerializeField] private Transform cameraPivot;
+ 
+    
     //client side input
     private Vector2 moveInput;
     private Vector2 lookAccum;
@@ -71,6 +77,7 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            TryGetComponent<CameraControllerAlt>(out cameraController);
         }
 
 
@@ -79,7 +86,7 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
     public override void OnStartNetwork()
     {
         base.OnStartNetwork();
-
+        
         if (TryGetComponent<Rigidbody>(out Rigidbody rb)) //get rigidbody
         {
             this.rb = rb;
@@ -204,7 +211,7 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
         if (!string.IsNullOrWhiteSpace(isMovingParam))
             animator.SetBool(isMovingParam, clampedMove.sqrMagnitude > 0.001f);
 
-        RotatePlayer(lookDeltaThisTick); //rotate player
+        //RotatePlayer(lookDeltaThisTick); //rotate player
         lookDeltaThisTick = Vector2.zero; //consume delta
     }
 
@@ -229,13 +236,13 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
         }
     }
 
-    private void RotatePlayer(Vector2 lookDelta)
+    private void RotatePlayer()
     {
-        /*//TODO: change to rotate only when starting from standstill
-        float rotDir = lookDelta.x * sensitivity;
+        //TODO: rotate towards input relative to camera yaw   
+        float rotDir = cameraPivot.rotation.eulerAngles.y;
 
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, rotDir, 0f));
-        lookDelta = Vector2.zero; //consume delta*/
+        rb.MoveRotation(Quaternion.Euler(0f, rotDir, 0f));
+
     }
 
     //get look input from action map
@@ -255,6 +262,11 @@ public class PlayerMovementControllerAlt : NetworkBehaviour
             return;
 
         moveInput = context.ReadValue<Vector2>();
+
+        if (context.started)
+        {
+            RotatePlayer();   
+        }
     }
 
     public void GetSprintInput(InputAction.CallbackContext context)

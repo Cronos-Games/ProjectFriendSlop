@@ -19,8 +19,8 @@ public class CameraControllerAlt : NetworkBehaviour
     
     private Vector2 _lookAccum;
     private Vector3 _cameraPosition;
-    private float _pitchY = 0f;
-    private float _pitchX = 0f;
+    private float _yaw = 0f;
+    private float _pitch = 0f;
     
     public override void OnStartClient()
     {
@@ -33,13 +33,14 @@ public class CameraControllerAlt : NetworkBehaviour
     }
 
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         Vector2 lookDeltaThisTick = _lookAccum;
         _lookAccum =  Vector2.zero;
 
-        moveCameraVertical(lookDeltaThisTick);
+        MoveCamera(lookDeltaThisTick);
     }
+
 
 
     public void GetLookInput(InputAction.CallbackContext context)
@@ -53,27 +54,22 @@ public class CameraControllerAlt : NetworkBehaviour
     
     
     
-    private void moveCameraVertical(Vector2 lookDelta)
+    private void MoveCamera(Vector2 lookDelta)
     {
         if (!IsOwner)
             return;
 
   
-        _pitchX -= lookDelta.y * sensitivity;
-        _pitchX = Mathf.Clamp(_pitchX, downAngleLimit, upAngleLimit);
+        _pitch -= lookDelta.y * sensitivity;
+        _pitch = Mathf.Clamp(_pitch, downAngleLimit, upAngleLimit);
         
-        _pitchY += lookDelta.x * sensitivity;
+        _yaw += lookDelta.x * sensitivity;
 
-        _cameraPivot.localRotation = Quaternion.Euler(_pitchX, _pitchY, 0f);
-        /*
-        float rotDir = lookDelta.y * sensitivity;
+        _cameraPivot.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
 
-        _cameraPivot.Rotate(-rotDir, 0f, 0f, Space.Self);
-        */
         
         lookDelta = Vector2.zero;
     }
-    
-    
+
     
 }
