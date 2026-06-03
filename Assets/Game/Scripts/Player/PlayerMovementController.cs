@@ -4,6 +4,7 @@ using FishNet.Object;
 using System.Runtime.CompilerServices;
 using FishNet.Connection;
 using FishNet.Component.Prediction;
+using Sirenix.Utilities;
 
 public class PlayerMovementController : NetworkBehaviour
 {
@@ -230,6 +231,7 @@ public class PlayerMovementController : NetworkBehaviour
 
     private void RotatePlayer(Vector2 lookDelta)
     {
+        //TODO: change to rotate only when starting from standstill
         float rotDir = lookDelta.x * sensitivity;
 
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, rotDir, 0f));
